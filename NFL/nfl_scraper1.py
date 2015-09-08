@@ -4,14 +4,16 @@ from lxml import html
 import requests
 from bs4 import BeautifulSoup
 
-#game times pull
-page1 = requests.get('https://rotogrinders.com/lineups/mlb?site=fanduel')
-tree1 = page1.text
+#FanDuel salaries
+
+#QB's
+qb_page = requests.get('http://www.fantasypros.com/nfl/fanduel-cheatsheet.php')
+tree1 = qb_page.text
 
 soup = BeautifulSoup(tree1, 'html.parser')
 
-#print times
-times = soup.find_all("time")
-print "Game Times: "
-for line in times:
-    print line.text
+fd_qb_name = soup.find("div", {"class": "mobile-table"}).a.contents
+
+print "Names: "
+for line in fd_qb_name:
+    print line
